@@ -1,8 +1,9 @@
 import { StyleSheet, View, Text } from 'react-native';
-import { Branch } from './Branch';
+import { useClosestBranch } from './providers/ClosestBranchProvider';
 
-export default function BranchDetails({ branch }: { branch: Branch }) {
-  return (
+export default function BranchDetails() {
+  const { closest: branch } = useClosestBranch();
+  return branch ? (
     <View style={styles.container}>
       <View style={styles.row}>
         <Text style={styles.text}>Branch name:</Text>
@@ -23,6 +24,8 @@ export default function BranchDetails({ branch }: { branch: Branch }) {
         </View>
       )}
     </View>
+  ) : (
+    <></>
   );
 }
 
