@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import BranchesInput from './src/BranchesInput';
 import { SearchLocation } from './src/SearchLocation';
@@ -13,7 +13,7 @@ import BranchDetails from './src/BranchDetails';
 export default function App() {
   const [state, branches] = useLoading();
   const [search, setSearch] = useState<SearchLocation>();
-  const [closest, setClosest] = useState<undefined | Branch>();
+  const [closest, setClosest] = useState<undefined | Branch[]>();
   useEffect(() => {
     if (branches && typeof search === 'object') {
       setClosest(closestBranchTo(search, branches));
@@ -24,11 +24,17 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Map closest={closest} />
+      <Map closestBranches={closest} />
       {state === 'ready' ? (
         <>
           <BranchesInput search={search} setSearch={setSearch} />
-          {closest && <BranchDetails branch={closest} />}
+          {closest && (
+            <ScrollView>
+              {closest.map((closestBranch) => (
+                <BranchDetails key={closestBranch.Identification} branch={closestBranch} />
+              ))}
+            </ScrollView>
+          )}
         </>
       ) : state === 'error' ? (
         <View style={styles.centred}>

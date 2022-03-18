@@ -6,6 +6,11 @@ type Coordinate = {
   longitude: number;
 };
 
+type BranchDistance = {
+  branch: Branch;
+  distance: number;
+};
+
 // https://stackoverflow.com/a/65799152/5225716
 function distanceBetween(coord1: Coordinate, coord2: Coordinate) {
   if (
@@ -39,9 +44,11 @@ function distanceBetween(coord1: Coordinate, coord2: Coordinate) {
 export function closestBranchTo(
   location: Location.LocationGeocodedLocation,
   branches: Branch[],
-): Branch | undefined {
-  let closestBranch = undefined;
+): Branch[] | undefined {
   let closestDistance = Number.MAX_VALUE;
+  const topNumberOfBranches = 5;
+  const sortedBranches: BranchDistance[] = [];
+
   branches.forEach((branch) => {
     if (branch.PostalAddress.GeoLocation) {
       const distance = distanceBetween(location, {
@@ -53,10 +60,13 @@ export function closestBranchTo(
         ),
       });
       if (distance < closestDistance) {
-        closestBranch = branch;
-        closestDistance = distance;
+        sortedBranches.push({ branch, distance });
       }
     }
   });
-  return closestBranch;
+  //I am ordering the branches by distance asceding and then picking first 5
+  return sortedBranches
+    .sort((branchA, branchB) => branchA.distance - branchB.distance)
+    .slice(0, topNumberOfBranches)
+    .map((branchDistance) => branchDistance.branch);
 }
