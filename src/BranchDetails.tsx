@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native';
 import { Branch } from './Branch';
+import { FriendlyList } from './FriendlyList';
 
 export default function BranchDetails({ branch }: { branch: Branch }) {
   return (
@@ -11,15 +12,13 @@ export default function BranchDetails({ branch }: { branch: Branch }) {
       {branch.ServiceAndFacility && (
         <View style={styles.row}>
           <Text style={styles.text}>Services:</Text>
-          <Text style={styles.textBold}>
-            {branch.ServiceAndFacility.join(', ')}
-          </Text>
+          <FriendlyList items={branch.ServiceAndFacility}></FriendlyList>
         </View>
       )}
       {branch.Accessibility && (
         <View style={styles.row}>
           <Text style={styles.text}>Accessibility:</Text>
-          <Text style={styles.textBold}>{branch.Accessibility.join(', ')}</Text>
+          <FriendlyList items={branch.Accessibility}></FriendlyList>
         </View>
       )}
     </View>
