@@ -28,14 +28,5 @@ export function FriendlyList({ items }: IFriendlyList) {
   //makes the first character upper case
   result = result.replace(/./, (c) => c.toUpperCase());
 
-  return <Text style={styles.textBold}>{result}</Text>;
+  return result;
 }
-
-const styles = StyleSheet.create({
-  textBold: {
-    fontFamily: 'textBold',
-    color: 'black',
-    fontSize: 14,
-    flex: 1,
-  },
-});

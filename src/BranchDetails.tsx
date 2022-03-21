@@ -12,7 +12,9 @@ export default function BranchDetails({ branch }: { branch: Branch }) {
       {branch.ServiceAndFacility && (
         <View style={styles.row}>
           <Text style={styles.text}>Services:</Text>
-          <FriendlyList items={branch.ServiceAndFacility}></FriendlyList>
+          <Text style={styles.textBold}>
+            <FriendlyList items={branch.ServiceAndFacility}></FriendlyList>
+          </Text>
         </View>
       )}
       {branch.Accessibility && (
