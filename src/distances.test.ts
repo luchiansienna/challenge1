@@ -45,10 +45,10 @@ describe('closestBranchTo', () => {
   });
 
   it('should return a single branch', () => {
-    expect(closestBranchTo(location, [branch1])).toBe(branch1);
+    expect(closestBranchTo(location, [branch1])).toEqual([branch1]);
   });
 
   it('should return the closest branch', () => {
-    expect(closestBranchTo(location, [branch2, branch1])).toBe(branch1);
+    expect(closestBranchTo(location, [branch2, branch1])).toEqual([branch1, branch2]);
   });
 });

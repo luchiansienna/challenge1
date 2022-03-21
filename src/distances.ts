@@ -65,6 +65,8 @@ export function closestBranchTo(
     }
   });
   //I am ordering the branches by distance asceding and then picking first 5
+  if(sortedBranches.length==0)
+    return undefined;
   return sortedBranches
     .sort((branchA, branchB) => branchA.distance - branchB.distance)
     .slice(0, topNumberOfBranches)
